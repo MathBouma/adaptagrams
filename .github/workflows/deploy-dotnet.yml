@@ -1,5 +1,6 @@
 name: build-and-test
 on:
+  push: feature/*
   workflow_dispatch:
   pull_request:
 jobs:
@@ -8,7 +9,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: setup dependencies
+        run: sudo apt update && sudo apt install -y swig
+
       - name: autogen
         working-directory: cola
         run: ./autogen.sh
+
+      - name: make dotnet
+        working-directory: cola
+        run: make -f Makefile-swig-csharp
+      
+      
 

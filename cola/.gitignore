@@ -65,6 +65,7 @@ lib*/.libs
 lib*/lib*.pc
 
 adaptagrams*
+!adaptagrams.csproj
 !adaptagrams.i
 
 swig-worked
