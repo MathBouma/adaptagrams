@@ -45,7 +45,7 @@ clean: mostlyclean
 mostlyclean:
 	rm -f swig-worked
 	rm -f adaptagrams_wrap.o adaptagrams_wrap.cxx
-	rm -rf dotnet/adaptagrams*
+	rm -rf dotnet/adaptagrams/*
 
 .PHONY: all clean mostlyclean realclean
 
