@@ -12,15 +12,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: setup dependencies
-        run: sudo apt update && sudo apt install -y swig
+        run: sudo apt update && sudo apt install -y swig g++-mingw-w64-x86-64
 
-      - name: autogen
+      - name: Compile for Win/Linux
         working-directory: cola
-        run: ./autogen.sh
+        run: ./dotnet-multiplatform-build.sh
 
-      - name: make dotnet
-        working-directory: cola
-        run: make -f Makefile-swig-csharp
       
       
 

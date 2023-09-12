@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <Title>Adaptagrams</Title>
+    <PackageId>MathBouma.Adaptagrams</PackageId>
+    <Version>1.0.6</Version>
+    <Authors>Tim Dwye, Michael Wybrow, Steve Kieffer, Mathew Bouma</Authors>
+    <RepositoryUrl>https://github.com/MathBouma/adaptagrams</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Product>Adaptagrams</Product>
+    <PackageLicenseExpression>LGPL-2.1-or-later</PackageLicenseExpression>
+    <PackageProjectUrl>www.adaptagrams.org</PackageProjectUrl>
+    <AssemblyName>MathBouma.Adaptagrams</AssemblyName>
+    <Description>
+      An unoffical build / bindings of adaptagrams for .NET
+    
+      Adaptagrams is a library of tools and reusable code for adaptive diagramming applications, for example: drawing tools, automated document and diagram layout, smart presentation software, graph drawing, chart layout, etc.
+      
+      Currently, the Adaptagrams repository includes five cross-platform C++ libraries:
+      libvpsc
+      - a solver for the Variable Placement with Separation Constraints problem. This is a quadratic programming problem in which the squared differences between a placement vector and some ideal placement are minimised subject to a set of separation constraints. This is very useful in a number of layout problems.
+      libcola
+      - a library for constraint graph layout. Specifically, force-directed layout using the stress-majorization method subject to separation constraints. Applications include layout with non-overlapping nodes and clusters, directed graph layout and layout preserving the crossing properties of a given starting layout.
+      - libcola depends on libvpsc.
+      libavoid
+      - a library providing high-quality object-avoiding polyline and orthogonal connector routing for use in interactive diagram editors.
+      libtopology
+      - a library containing extensions to libcola to support topology preserving constraint-based layout.
+      - libtopology depends on libavoid, libcola and libvpsc.
+      libdialect
+      - a library for computing human-like orthogonal network (DiAlEcT) layouts via the following steps: D = Decompose/Distribute; A = Arrange; E = Expand/Emend; and T = Transform.
+      - libdialect depends on libavoid, libcola and libvpsc.
+    </Description>
+
+  </PropertyGroup>
+  <ItemGroup>
+      <None Include="../README.md" Pack="true" PackagePath="\"/>
+      <None Include="../../adaptagrams.dll">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <pack>true</pack>
+      </None>
+      <None Include="../../adaptagrams.so">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <pack>true</pack>
+      </None>
+  </ItemGroup>
+</Project>

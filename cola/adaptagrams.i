@@ -207,6 +207,31 @@ class ColaException {
 %nodefaultdtor dialect::Node;
 %nodefaultdtor dialect::Edge;
 
+%rename(ColaTestConvergenceOperator) cola::TestConvergence::operator();
+
+%rename(AvoidBox) Avoid::Box;
+%rename(AvoidEdge) Avoid::Edge;
+%rename(AvoidRectangle) Avoid::Rectangle;
+%rename(AvoidTopologyAddonInterface) Avoid::TopologyAddonInterface;
+
+%rename(getVarConst) topology::Node::getVar() const;
+
+%rename(DialectNode) dialect::Node;
+%rename(DialectEdge) dialect::Edge;
+
+%shared_ptr(dialect::Node)
+%shared_ptr(dialect::Edge)
+%shared_ptr(dialect::GhostNode)
+%shared_ptr(dialect::PeeledNode)
+%shared_ptr(dialect::Graph)
+%shared_ptr(dialect::Tree)
+%shared_ptr(dialect::Side)
+%shared_ptr(dialect::Nexus)
+%shared_ptr(dialect::Face)
+%shared_ptr(dialect::FaceSet)
+%shared_ptr(dialect::TreePlacement)
+%shared_ptr(dialect::Chain)
+
 %include "libdialect/commontypes.h"
 
 %template(Chars) std::vector<char>;
@@ -233,6 +258,7 @@ class ColaException {
 %template(ChainPtrs) std::vector<std::shared_ptr<dialect::Chain>>;
 %template(DialectNodes) std::vector<std::shared_ptr<dialect::Node>>;
 %template(DialectNodeLookup) std::map<dialect::id_type, std::shared_ptr<dialect::Node>>;
+%template(DialectEdgeLookup) std::map<dialect::id_type, std::shared_ptr<dialect::Edge>>;
 %template(DialectNodeDeques) std::vector<std::deque<std::shared_ptr<dialect::Node>>>;
 
 %inline %{
@@ -249,36 +275,6 @@ void deleteDoubleArray(double* a) {
    delete a;
 }
 %}
-
-%rename(ColaTestConvergenceOperator) cola::TestConvergence::operator();
-
-%rename(AvoidBox) Avoid::Box;
-%rename(AvoidEdge) Avoid::Edge;
-%rename(AvoidRectangle) Avoid::Rectangle;
-%rename(AvoidTopologyAddonInterface) Avoid::TopologyAddonInterface;
-
-%rename(getVarConst) topology::Node::getVar() const;
-
-%rename(DialectNode) dialect::Node;
-%rename(DialectEdge) dialect::Edge;
-
-%shared_ptr(dialect::Node)
-%shared_ptr(dialect::GhostNode)
-%shared_ptr(dialect::PeeledNode)
-%shared_ptr(dialect::Graph)
-%shared_ptr(dialect::Tree)
-%shared_ptr(dialect::Side)
-%shared_ptr(dialect::Nexus)
-%shared_ptr(dialect::Face)
-%shared_ptr(dialect::FaceSet)
-%shared_ptr(dialect::TreePlacement)
-%shared_ptr(dialect::Chain)
-
-/* %warnfilter(315) dialect::Edge; */
-%ignore dialect::Edge::m_tgt;
-
-
-
 
 /* Parse the header file to generate wrappers */
 %include "libvpsc/rectangle.h"

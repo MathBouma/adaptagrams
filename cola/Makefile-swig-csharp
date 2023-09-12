@@ -1,5 +1,3 @@
-OSNAME:=$(shell uname -s | sed 's/_.*//')
-
 ifeq ($(OSNAME),Darwin)
 	CPPFLAGS =
 	LINK = $(CXX) $(CXXFLAGS) -dynamiclib -framework JavaVM -o adaptagrams.dylib
@@ -10,8 +8,8 @@ else
 		LINK = $(CXX) $(CXXFLAGS) -shared -o adaptagrams.so
 	else 
 	    ifeq ($(OSNAME),MINGW32)
-			CPPFLAGS =
-			LINK = $(CXX) $(CXXFLAGS) -Wl,--add-stdcall-alias -shared -o adaptagrams.dll
+			CPPFLAGS = -static-libstdc++ -static-libgcc
+			LINK = $(CXX) $(CXXFLAGS) -static-libstdc++ -static-libgcc -Wl,--add-stdcall-alias -shared -o adaptagrams.dll
 		endif
 	endif
 endif
@@ -20,7 +18,7 @@ all: adaptagrams dll
 
 swig-worked: clean adaptagrams.i
 	mkdir -p dotnet/adaptagrams
-	cp adaptagrams.csproj dotnet/adaptagrams
+	cp dotnet/adaptagrams.csproj dotnet/adaptagrams
 	swig -DUSE_ASSERT_EXCEPTIONS -c++ -csharp -outdir dotnet/adaptagrams -namespace MathBouma.Adaptagrams adaptagrams.i
 	touch swig-worked
 
@@ -38,14 +36,16 @@ dll: swig-worked
 publish: dll
 	dotnet pack dotnet/adaptagrams/adaptagrams.csproj
 
+fullclean: mostlyclean
+	rm -f adaptagrams.so adaptagrams.dll 
 
 clean: mostlyclean
-	rm -f adaptagrams.so adaptagrams.dylib adaptagrams.so
+	rm -f adaptagrams.dylib
 
 mostlyclean:
 	rm -f swig-worked
-	rm -f adaptagrams_wrap.o adaptagrams_wrap.cxx adaptagrams.jar
-	rm -rf dotnet/*
+	rm -f adaptagrams_wrap.o adaptagrams_wrap.cxx
+	rm -rf dotnet/adaptagrams*
 
 .PHONY: all clean mostlyclean realclean
 
