@@ -1,4 +1,4 @@
-name: build-and-test
+name: Build / Deploy to NuGet
 on:
   push: 
     branches:
@@ -11,13 +11,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: setup dependencies
+      - name: Setup Dependencies
         run: sudo apt update && sudo apt install -y swig g++-mingw-w64-x86-64
 
       - name: Compile for Win/Linux
         working-directory: cola
         run: ./dotnet-multiplatform-build.sh
 
-      
-      
+      - name: Dotnet Pack
+        working-directory: cola/dotnet/adaptagrams/
+        run: dotnet pack
 
+      - name: Push to NuGet
+        working-directory: cola/dotnet/adaptagrams/nugetpkg
+        run:  dotnet nuget push "*.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
