@@ -1,0 +1,51 @@
+ifeq ($(OSNAME),Darwin)
+	CPPFLAGS =
+	LINK = $(CXX) $(CXXFLAGS) -dynamiclib -framework JavaVM -o adaptagrams.dylib
+else 
+	# Some make versions say only one else per if statment.
+	ifeq ($(OSNAME),Linux)
+		CPPFLAGS = -fPIC
+		LINK = $(CXX) $(CXXFLAGS) -shared -o adaptagrams.so
+	else 
+	    ifeq ($(OSNAME),MINGW32)
+			CPPFLAGS = -static-libstdc++ -static-libgcc
+			LINK = $(CXX) $(CXXFLAGS) -static-libstdc++ -static-libgcc -Wl,--add-stdcall-alias -shared -o adaptagrams.dll
+		endif
+	endif
+endif
+
+all: adaptagrams dll
+
+swig-worked: clean adaptagrams.i
+	mkdir -p dotnet/adaptagrams
+	cp dotnet/adaptagrams.csproj dotnet/adaptagrams
+	swig -DUSE_ASSERT_EXCEPTIONS -c++ -csharp -outdir dotnet/adaptagrams -namespace MathBouma.Adaptagrams adaptagrams.i
+	touch swig-worked
+
+adaptagrams_wrap.o: swig-worked
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -I ./ -c adaptagrams_wrap.cxx
+
+adaptagrams: adaptagrams_wrap.o
+	$(LINK) adaptagrams_wrap.o libcola/.libs/libcola.a libtopology/.libs/libtopology.a libavoid/.libs/libavoid.a libvpsc/.libs/libvpsc.a libdialect/.libs/libdialect.a
+
+realclean: clean
+
+dll: swig-worked
+	dotnet build dotnet/adaptagrams/adaptagrams.csproj
+
+publish: dll
+	dotnet pack dotnet/adaptagrams/adaptagrams.csproj
+
+fullclean: mostlyclean
+	rm -f adaptagrams.so adaptagrams.dll 
+
+clean: mostlyclean
+	rm -f adaptagrams.dylib
+
+mostlyclean:
+	rm -f swig-worked
+	rm -f adaptagrams_wrap.o adaptagrams_wrap.cxx
+	rm -rf dotnet/adaptagrams/*
+
+.PHONY: all clean mostlyclean realclean
+

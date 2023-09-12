@@ -2,6 +2,7 @@ EXTRA_DIST=libcola.pc.in
 
 lib_LTLIBRARIES = libcola.la
 libcola_la_CPPFLAGS = -I$(top_srcdir) $(CAIROMM_CFLAGS) -I$(includedir)/libcola -fPIC
+libcola_la_LDFLAGS = -no-undefined
 
 # Depends on libvpsc
 libcola_la_LIBADD = $(top_builddir)/libvpsc/libvpsc.la $(CAIROMM_LIBS)
