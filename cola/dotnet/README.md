@@ -11,7 +11,7 @@ layout, smart presentation software, graph drawing, chart layout, etc.
 ### C# Usage
 An example of a using the libdialect to access HOLA:
 
-``` C# 
+``` csharp	
 using MathBouma.Adaptagrams;
 
 // Build a graph.
@@ -26,7 +26,6 @@ Console.WriteLine(graph.writeTglf());
 ```
 
 As all the bindings are generated from SWIG, it should be the same as if you were using the library in any other language.
-
 
 ### Other Project Information
 Currently, the [Adaptagrams repository][repo] includes five cross-platform C++ 
