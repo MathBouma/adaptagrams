@@ -20,7 +20,7 @@ jobs:
 
       - name: Dotnet Pack
         working-directory: cola/dotnet/adaptagrams/
-        run: dotnet pack
+        run: dotnet pack --output nugetpkg
 
       - name: Push to NuGet
         working-directory: cola/dotnet/adaptagrams/nugetpkg
