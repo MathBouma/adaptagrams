@@ -1,0 +1,23 @@
+name: Build / Test
+on:
+  push: 
+    branches:
+      - feature/*
+      
+jobs:
+  build-and-test:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Dependencies
+        run: sudo apt update && sudo apt install -y swig g++-mingw-w64-x86-64
+
+      - name: Compile for Win/Linux
+        working-directory: cola
+        run: ./dotnet-multiplatform-build.sh
+
+      - name: Dotnet Pack
+        working-directory: cola/dotnet/adaptagrams/
+        run: dotnet pack --output nugetpkg

@@ -4,7 +4,7 @@ ifeq ($(OSNAME),Darwin)
 else 
 	# Some make versions say only one else per if statment.
 	ifeq ($(OSNAME),Linux)
-		CPPFLAGS = -fPIC
+		CPPFLAGS = -fPIC -static-libstdc++ -static-libgcc
 		LINK = $(CXX) $(CXXFLAGS) -shared -o adaptagrams.so
 	else 
 	    ifeq ($(OSNAME),MINGW32)
