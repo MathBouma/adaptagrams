@@ -7,7 +7,7 @@
 
     <Title>Adaptagrams</Title>
     <PackageId>MathBouma.Adaptagrams</PackageId>
-    <Version>1.0.9</Version>
+    <Version>1.0.10</Version>
     <Authors>Tim Dwye, Michael Wybrow, Steve Kieffer, Mathew Bouma</Authors>
     <RepositoryUrl>https://github.com/MathBouma/adaptagrams</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
